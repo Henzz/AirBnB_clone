@@ -5,7 +5,7 @@ import json
 from models.base_model import BaseModel
 
 
-class FileStorage():
+class FileStorage:
     """
     FileStorage class represents the file storage for storing
     and retrieving model instances.
