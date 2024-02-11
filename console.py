@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
+# console.py
 """Command line interpreter"""
 import cmd
+import readline
 
-class MyCmd(cmd.Cmd):
-    prompt = "(hbnh) " # prompt text
-    intro = "Welcome to the console. Type 'help' for available commands." # Intro message
+
+class HBNBCommand(cmd.Cmd):
+    # Show a prompt
+    prompt = "(hbnh) "
 
     def do_greet(self, args):
         """Greets the user"""
@@ -28,6 +31,20 @@ class MyCmd(cmd.Cmd):
         except ValueError:
             print("Invalid input. Usage multiply <num1> <num2>")
 
+    def emptyline(self):
+        """
+        Called when an empty line is entered in reponse to the prompt.
+
+        If this method is not overridden, it repeats the last nonempty
+        command entered.
+        """
+        if self.lastcmd:
+            self.lastcmd = ""
+            return self.onecmd('\n')
+
+    def default(self, line):
+        return cmd.Cmd.default(self, line)
+
     def do_EOF(self, line):
         """Exits the console"""
         return True
@@ -38,4 +55,4 @@ class MyCmd(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    MyCmd().cmdloop()
+    HBNBCommand().cmdloop()
