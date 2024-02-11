@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+# console.py
 """This module defines the HBNBCommand class, a command interpreter"""
 
 import cmd
@@ -14,7 +15,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """ HBNB Command Interpreter """
 
-    prompt = "(hbnb) "
+    prompt = "(hbnb) "  # Shows a prompt
 
     def do_create(self, arg):
         """ Create a new instance of BaseModel """
@@ -133,6 +134,18 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Do nothing on empty input line """
         pass
+
+    def help_quit(self):
+        """
+        Help message for the quit command.
+        """
+        print("Quit command to exit the program\n")
+
+    def help_EOF(self):
+        """
+        Help message for the EOF command.
+        """
+        print("Exit command to exit the program on EOF(Ctrl+D))\n")
 
 
 if __name__ == '__main__':
