@@ -2,12 +2,13 @@
 # console.py
 """Command line interpreter"""
 import cmd
-import readline
 
 
 class HBNBCommand(cmd.Cmd):
-    # Show a prompt
-    prompt = "(hbnh) "
+    """
+    Command interpreter class.
+    """
+    prompt = "(hbnh) "  # Shows a prompt
 
     def do_greet(self, args):
         """Greets the user"""
@@ -33,25 +34,29 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """
-        Called when an empty line is entered in reponse to the prompt.
-
-        If this method is not overridden, it repeats the last nonempty
-        command entered.
+        Do nothing when an empty line is entered.
         """
-        if self.lastcmd:
-            self.lastcmd = ""
-            return self.onecmd('\n')
-
-    def default(self, line):
-        return cmd.Cmd.default(self, line)
+        pass
 
     def do_EOF(self, line):
-        """Exits the console"""
+        """Exits the console on EOF (Ctrl+D)"""
         return True
 
     def do_quit(self, args):
         """Exits my cmd console"""
         return True
+
+    def help_quit(self):
+        """
+        Help message for the quit command.
+        """
+        print("Quit the command interpreter.")
+
+    def help_EOF(self):
+        """
+        Help message for the EOF command.
+        """
+        print("Exit the command interpreter on EOF (Ctrl+D).")
 
 
 if __name__ == "__main__":
