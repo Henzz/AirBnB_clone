@@ -4,6 +4,7 @@
 import cmd
 import readline
 
+
 class HBNBCommand(cmd.Cmd):
     # Show a prompt
     prompt = "(hbnh) "

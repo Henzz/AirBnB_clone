@@ -2,8 +2,9 @@
 # test_base_model.py
 """Unit test for BaseModel class."""
 import unittest
-import models.base_mode import BaseModel
-import models.engine.file_storage import FileStorage
+from datetime import datetime
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
 
 class TestBaseModel(unittest.TestCase):
@@ -16,6 +17,9 @@ class TestBaseModel(unittest.TestCase):
         Set up test fixtures and instantiate objects needed for each test case.
         """
         self.base_model = BaseModel()
+        self.file_path = "test_file.json"
+        self.storage = FileStorage()
+        self.storage._FileStorage__file_path = self.file_path
 
     def tearDown(self):
         """
@@ -51,23 +55,27 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(obj_dict['__class__'], 'BaseModel')
         self.assertEqual(type(obj_dict['created_at']), str)
         self.assertEqual(type(obj_dict['updated_at']), str)
-        # self.assertEqual(data['created_at'], model.created_at.isoformat())
-        # self.assertEqual(data['updated_at'], model.updated_at.isoformat())
 
-    def test_file_storage(self):
+    def test_file_storage_integration(self):
         """
-        Test the integration of the BaseModel class with the FileStorage class.
+        Test the integration with FileStorage.
         """
-        storage = FileStorage()
-        storage.new(self.base_model)
-        storage.save()
-        storage.reload()
-        all_objects = storage.all()
-        self.assertEqual(len(all_objects), 1)
-        loaded_model = all_objects['BaseModel.' + self.base_model.id]
-        self.assertEqual(loaded_model.id, self.base_model.id)
-        self.assertEqual(loaded_model.created_at, self.base_model.created_at)
-        self.assertEqual(loaded_model.updated_at, self.base_model.updated_at)
+        # Create a new object
+        obj = self.base_model
+
+        # Save the object
+        obj.save()
+
+        # Reload the storage
+        self.storage.reload()
+
+        # Check if the object is correctly stored and reloaded from
+        # the FileStorage
+        self.assertIn("BaseModel.{}".format(obj.id), self.storage.all())
+        reloaded_obj = self.storage.all()["BaseModel.{}".format(obj.id)]
+        self.assertEqual(obj.id, reloaded_obj.id)
+        self.assertEqual(obj.created_at, reloaded_obj.created_at)
+        self.assertEqual(obj.updated_at, reloaded_obj.updated_at)
 
 
 if __name__ == '__main__':
