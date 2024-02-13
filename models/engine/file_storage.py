@@ -46,12 +46,12 @@ class FileStorage:
         """
         Serializes and saves the model instance to the file storage.
         """
-        serialized_objs = {}
+        serialized_data = {}
         for key, obj in self.__objects.items():
-            serialized_objs[key] = obj.to_dict()
+            serialized_data[key] = obj.to_dict()
 
         with open(self.__file_path, 'w') as file:
-            json.dump(serialized_objs, file)
+            json.dump(serialized_data, file)
 
     def reload(self):
         """
