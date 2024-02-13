@@ -3,6 +3,7 @@
 """This module contains the `BaseModel` class."""
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -43,16 +44,14 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            from models import storage
             storage.new(self)
 
     def save(self):
         """
-        Updates the attribute `updated_at`.
+        Updates the public instance `updated_at`.
         Saves the current model instance.
         """
         self.updated_at = datetime.now()
-        from models import storage
         storage.save()
 
     def to_dict(self):
@@ -65,8 +64,8 @@ class BaseModel:
         """
         data = self.__dict__.copy()
         data['__class__'] = self.__class__.__name__
-        data['created_at'] = self.created_at.isoformat()
-        data['updated_at'] = self.updated_at.isoformat()
+        data['created_at'] = data['created_at'].isoformat()
+        data['updated_at'] = data['updated_at'].isoformat()
         return data
 
     def __str__(self):

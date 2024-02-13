@@ -2,7 +2,6 @@
 # file_storage.py
 """This module contains the `FileStorage` class."""
 import json
-from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -58,11 +57,17 @@ class FileStorage:
         Deserializes and reloads the models instances from the file storage.
         """
         try:
+            from models.base_model import BaseModel
+            class_dict = {
+                    'BaseModel': BaseModel,
+            }
             with open(self.__file_path, 'r') as file:
                 serialized_objs = json.load(file)
                 for key, obj_dict in serialized_objs.items():
                     class_name, obj_id = key.split('.')
-                    obj = eval(class_name)(**obj_dict)
+                    obj = class_dict.get(class_name)(**obj_dict)
+                    # obj = eval(class_name)(**obj_dict)
+                    # obj = globals()[class_name](**obj_dict)
                     self.__objects[key] = obj
         except FileNotFoundError:
             pass
