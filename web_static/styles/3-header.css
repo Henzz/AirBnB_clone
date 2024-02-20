@@ -1,16 +1,15 @@
 header {
-	color: #FFFFFF;
+	background-color: #FFFFFF;
 	height: 70px;
 	width: 100%;
 	border-bottom: 1px solid #CCCCCC;
-	display: flex;
-	justify-content: left;
-	align-items: center;
 }
 
-header span {
-	width: 200px;
+header .logo {
+	display: inline-block;
+	width: 120px;
 	height: 100%;
+	margin-left: 15px;
 	background-image: url('../images/logo.png');
 	background-size: contain;
 	background-repeat: no-repeat;
