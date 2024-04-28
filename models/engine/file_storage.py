@@ -28,7 +28,7 @@ class FileStorage:
 
         Returns:
             dict: A dictionart containing all model instances."""
-        return self.__objects.copy()
+        return self.__objects
 
     def new(self, obj):
         """
