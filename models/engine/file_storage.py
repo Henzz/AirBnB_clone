@@ -2,6 +2,7 @@
 # file_storage.py
 """This module contains the `FileStorage` class."""
 import json
+import os.path
 
 
 class FileStorage:
@@ -28,7 +29,7 @@ class FileStorage:
 
         Returns:
             dict: A dictionart containing all model instances."""
-        return self.__objects
+        return self.__objects.copy()
 
     def new(self, obj):
         """
