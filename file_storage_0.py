@@ -7,6 +7,7 @@ try:
     file_path = FileStorage._FileStorage__file_path
 except:
     pass
+
 try:
     os.remove(file_path)
 except Exception as e:

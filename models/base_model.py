@@ -52,21 +52,22 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the public instance `updated_at`.
-        Saves the current model instance.
+        Saves the object to the storage.
+
+        Updates `updated_at` attribute, adds the object to the storage,
+        and saves the objects to the JSON file.
         """
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
         """
-        Converts the model instance to a dictionary.
+        Converts the object to a dictionary representation.
 
         Returns:
-            data (dict): A dictionary representation containing all of the
-            model instance.
+            data (dict): A dictionary representing the object.
         """
-        data = self.__dict__.copy()
+        data = dict(self.__dict__.copy())
         data['__class__'] = self.__class__.__name__
         data['created_at'] = data['created_at'].isoformat()
         data['updated_at'] = data['updated_at'].isoformat()
