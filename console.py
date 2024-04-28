@@ -24,7 +24,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in {"BaseModel", "State", "City", "Amenity", "Place", "Review"}:
+        if class_name not in {
+            "BaseModel",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+        }:
             print("** class doesn't exist **")
             return
         new_instance = eval("{}()".format(class_name))
@@ -38,7 +45,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in {"BaseModel", "State", "City", "Amenity", "Place", "Review"}:
+        if class_name not in {
+            "BaseModel",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+        }:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -58,7 +72,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in {"BaseModel", "State", "City", "Amenity", "Place", "Review"}:
+        if class_name not in {
+            "BaseModel",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+        }:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -79,10 +100,18 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in storage.all().values()])
         else:
             class_name = args[0]
-            if class_name not in {"BaseModel", "State", "City", "Amenity", "Place", "Review"}:
+            if class_name not in {
+                "BaseModel",
+                "State",
+                "City",
+                "Amenity",
+                "Place",
+                "Review"
+            }:
                 print("** class doesn't exist **")
                 return
-            print([str(obj) for key, obj in storage.all().items() if key.split('.')[0] == class_name])
+            print([str(obj) for key, obj in storage.all().items()
+                  if key.split('.')[0] == class_name])
 
     def do_update(self, arg):
         """ Update an instance by ID """
@@ -91,7 +120,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in {"BaseModel", "State", "City", "Amenity", "Place", "Review"}:
+        if class_name not in {
+            "BaseModel",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+        }:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -118,10 +154,18 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in {"BaseModel", "State", "City", "Amenity", "Place", "Review"}:
+        if class_name not in {
+            "BaseModel",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+        }:
             print("** class doesn't exist **")
             return
-        print(len([obj for key, obj in storage.all().items() if key.split('.')[0] == class_name]))
+        print(len([obj for key, obj in storage.all().items()
+              if key.split('.')[0] == class_name]))
 
     def do_quit(self, arg):
         """ Quit command to exit the program """

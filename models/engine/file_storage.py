@@ -2,7 +2,6 @@
 # file_storage.py
 """This module contains the `FileStorage` class."""
 import json
-import os.path
 from models.base_model import BaseModel
 
 
@@ -29,15 +28,13 @@ class FileStorage:
 
     def all(self):
         """
-        Retrieves all model instances.
-
-        Returns:
-            dict: A dictionart containing all model instances."""
+        Returns the dictionary __objects
+        """
         return self.__objects.copy()
 
     def new(self, obj):
         """
-        Adds a new model instance to the file storage.
+        Sets in __objects the obj with key <obj class name>.id
 
         Args:
             obj (BaseModel): The model instance to be added.
@@ -48,7 +45,7 @@ class FileStorage:
 
     def save(self):
         """
-        Serializes and saves the model instance to the file storage.
+        Serializes __objects to the JSON file
         """
         serialized_data = {}
         for key, obj in self.__objects.items():
@@ -59,7 +56,7 @@ class FileStorage:
 
     def reload(self):
         """
-        Deserializes and reloads the models instances from the file storage.
+        Deserializes the JSON file to __objects
         """
         try:
             with open(self.__file_path, 'r') as file:
@@ -67,6 +64,8 @@ class FileStorage:
 
             for key, obj_dict in serialized_objs.items():
                 class_name, obj_id = key.split('.')
+                # Create an instance of the class and
+                # set its attributes from the dictionary
                 obj = self.class_dict.get(class_name)(**obj_dict)
                 self.__objects[key] = obj
         except FileNotFoundError:
