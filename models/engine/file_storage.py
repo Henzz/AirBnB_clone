@@ -28,7 +28,7 @@ class FileStorage:
 
         Returns:
             dict: A dictionart containing all model instances."""
-        return self.__objects
+        return self.__objects.copy()
 
     def new(self, obj):
         """
@@ -57,6 +57,8 @@ class FileStorage:
         Deserializes and reloads the models instances from the file storage.
         """
         try:
+            if not os.path.isfile(FileStorage.__file_path):
+                self.save()
             from models.base_model import BaseModel
             class_dict = {
                     'BaseModel': BaseModel,
