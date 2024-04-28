@@ -19,7 +19,23 @@ class FileStorage:
         new(self, obj)
         save(self)
         reload(self)
+
+    Uses the Singleton pattern to ensure only one instance exists.
     """
+
+    __instance = None  # Private attribute to store the single instance
+
+    def __new__(cls):
+        """
+        Overrides the __new__ method to control object creation.
+
+        Returns:
+            FileStorage: The single instance of the class.
+        """
+        if not FileStorage.__instance:
+            FileStorage.__instance = super().__new__(cls)
+        return FileStorage.__instance
+
     __file_path = "file.json"
     __objects = {}
 
@@ -57,9 +73,9 @@ class FileStorage:
         """
         Deserializes and reloads the models instances from the file storage.
         """
+        if not os.path.isfile(FileStorage.__file_path):
+            self.save()
         try:
-            if not os.path.isfile(FileStorage.__file_path):
-                self.save()
             from models.base_model import BaseModel
             class_dict = {
                     'BaseModel': BaseModel,
