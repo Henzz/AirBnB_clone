@@ -3,7 +3,7 @@
 """This module contains the `BaseModel` class."""
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -35,8 +35,10 @@ class BaseModel:
                 if key == '__class__':
                     continue
                 if key in ['created_at', 'updated_at']:
-                    if value is not datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"):
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    if value is not\
+                            datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"):
+                        value = datetime\
+                            .strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 setattr(self, key, value)
             if 'created_at' not in kwargs:
                 print("created_at not present")
@@ -46,7 +48,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            storage.new(self)
+            models.storage.new(self)
 
     def save(self):
         """
@@ -54,7 +56,7 @@ class BaseModel:
         Saves the current model instance.
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """

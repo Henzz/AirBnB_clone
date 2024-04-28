@@ -3,6 +3,7 @@
 """This module contains the `FileStorage` class."""
 import json
 import os.path
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -19,25 +20,12 @@ class FileStorage:
         new(self, obj)
         save(self)
         reload(self)
-
-    Uses the Singleton pattern to ensure only one instance exists.
     """
-
-    __instance = None  # Private attribute to store the single instance
-
-    def __new__(cls):
-        """
-        Overrides the __new__ method to control object creation.
-
-        Returns:
-            FileStorage: The single instance of the class.
-        """
-        if not FileStorage.__instance:
-            FileStorage.__instance = super().__new__(cls)
-        return FileStorage.__instance
-
-    __file_path = "file.json"
+    __file_path = 'file.json'
     __objects = {}
+    class_dict = {
+        'BaseModel': BaseModel,
+    }
 
     def all(self):
         """
@@ -73,18 +61,13 @@ class FileStorage:
         """
         Deserializes and reloads the models instances from the file storage.
         """
-        if not os.path.isfile(FileStorage.__file_path):
-            self.save()
         try:
-            from models.base_model import BaseModel
-            class_dict = {
-                    'BaseModel': BaseModel,
-            }
             with open(self.__file_path, 'r') as file:
                 serialized_objs = json.load(file)
-                for key, obj_dict in serialized_objs.items():
-                    class_name, obj_id = key.split('.')
-                    obj = class_dict.get(class_name)(**obj_dict)
-                    self.__objects[key] = obj
+
+            for key, obj_dict in serialized_objs.items():
+                class_name, obj_id = key.split('.')
+                obj = self.class_dict.get(class_name)(**obj_dict)
+                self.__objects[key] = obj
         except FileNotFoundError:
             pass
