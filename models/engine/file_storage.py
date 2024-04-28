@@ -66,8 +66,6 @@ class FileStorage:
                 for key, obj_dict in serialized_objs.items():
                     class_name, obj_id = key.split('.')
                     obj = class_dict.get(class_name)(**obj_dict)
-                    # obj = eval(class_name)(**obj_dict)
-                    # obj = globals()[class_name](**obj_dict)
                     self.__objects[key] = obj
         except FileNotFoundError:
             pass

@@ -35,9 +35,11 @@ class BaseModel:
                 if key == '__class__':
                     continue
                 if key in ['created_at', 'updated_at']:
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    if value is not datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"):
+                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 setattr(self, key, value)
-            if 'created_at' not in kwargs.items():
+            if 'created_at' not in kwargs:
+                print("created_at not present")
                 self.created_at = datetime.now()
                 self.updated_at = self.created_at
         else:
